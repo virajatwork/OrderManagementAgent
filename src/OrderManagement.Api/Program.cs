@@ -12,6 +12,7 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddHealthChecks();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -25,6 +26,8 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
+
+app.MapHealthChecks("/health");
 
 var summaries = new[]
 {
